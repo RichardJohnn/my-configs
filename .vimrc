@@ -3,7 +3,7 @@ filetype off
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
-" testing
+
 Bundle 'gmarik/vundle'
 Bundle 'rails.vim'
 Bundle 'taglist.vim'
