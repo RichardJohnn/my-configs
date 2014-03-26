@@ -25,6 +25,7 @@ alias rake="noglob rake" # allows square brackts for rake task invocation
 alias brake='noglob bundle exec rake' # execute the bundled rake gem
 alias srake='noglob sudo rake' # noglob must come before sudo
 alias sbrake='noglob sudo bundle exec rake' # altogether now ... 
+alias julia="exec '/Applications/Julia-0.2.1.app/Contents/Resources/julia/bin/julia'"
 
 function c () {
     cd "$@" && ls

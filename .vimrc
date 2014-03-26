@@ -23,6 +23,7 @@ Bundle 'JSON.vim'
 Bundle 'cocoa.vim'
 Bundle 'scala.vim'
 Bundle 'Erlang-plugin-package'
+Bundle 'Hackerpilot/Dscanner'
 Bundle 'VimClojure'
 Bundle 'haskell.vim'
 Bundle 'checksyntax-B'
@@ -65,6 +66,7 @@ nmap <CR> o<Esc>
 
 " Make the mouse work
 set mouse=a
+set cursorline
 
 " Turn on auto indenting for pasted code
 set pastetoggle=<F2>
