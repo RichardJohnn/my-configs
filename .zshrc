@@ -1,3 +1,13 @@
+OS=`uname -s`
+
+if [ $OS = "Darwin" ]; then
+  OS="mac"
+elif [ $OS = "Linux" ]; then
+  OS="linux"
+else
+  OS="unknown"
+fi
+
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -70,21 +80,25 @@ function lastModified {
 plugins=(git autojump brew compleat mercurial npm web-search history-substring-search)
 
 source $ZSH/oh-my-zsh.sh
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source ~/.bin/tmuxinator.zsh
 unsetopt correct_all
 
 # Customize to your needs...
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/Users/rich/bin:/Applications/Sublime\ Text.app/Contents/SharedSupport/bin:/usr/local/share/npm/bin
 
 bindkey -v
 bindkey -M viins '^r' history-incremental-search-backward
 
-defaults write -g InitialKeyRepeat -int 10
-defaults write -g KeyRepeat -int 1
+if [[$OS == "mac"]]; then
+  source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  source ~/.bin/tmuxinator.zsh
+
+  defaults write -g InitialKeyRepeat -int 10
+  defaults write -g KeyRepeat -int 1
+  defaults write -g ApplePressEndHoldEnabled -bool false
+
+  export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/Users/rich/bin:/Applications/Sublime\ Text.app/Contents/SharedSupport/bin:/usr/local/share/npm/bin
+fi
 
 zmodload zsh/net/tcp
-defaults write -g ApplePressEndHoldEnabled -bool false
 export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
 export HOMEBREW_TEMP=~/tmp 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
