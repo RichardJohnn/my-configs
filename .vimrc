@@ -17,6 +17,7 @@ Bundle 'scrooloose/syntastic'
 Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
 Bundle 'wting/rust.vim'
+Bundle 'Lokaltog/vim-easymotion'
 
 "Language autocompletion
 Bundle 'JSON.vim'
@@ -66,16 +67,16 @@ nmap <CR> o<Esc>
 
 " Make the mouse work
 set mouse=a
-set cursorline
 
 " Turn on auto indenting for pasted code
 set pastetoggle=<F2>
 
 filetype plugin indent on
 
-if has("gui_running")
-    colorscheme molokai
-    set guifont=Consolas:h12
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
 endif
 
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -83,3 +84,10 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
+
+set cursorline
+augroup CursorLine
+    au!
+    au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    au WinLeave * setlocal nocursorline
+augroup END
