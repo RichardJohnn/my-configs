@@ -18,6 +18,7 @@ Bundle 'rizzatti/funcoo.vim'
 Bundle 'rizzatti/dash.vim'
 Bundle 'wting/rust.vim'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'wesQ3/vim-windowswap'
 
 "Language autocompletion
 Bundle 'JSON.vim'
