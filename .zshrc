@@ -1,13 +1,3 @@
-OS=`uname -s`
-
-if [ $OS = "Darwin" ]; then
-  OS="mac"
-elif [ $OS = "Linux" ]; then
-  OS="linux"
-else
-  OS="unknown"
-fi
-
 # Path to your oh-my-zsh configuration.
 ZSH=$HOME/.oh-my-zsh
 
@@ -26,27 +16,39 @@ alias brake='noglob bundle exec rake' # execute the bundled rake gem
 alias srake='noglob sudo rake' # noglob must come before sudo
 alias sbrake='noglob sudo bundle exec rake' # altogether now ... 
 alias julia="exec '/Applications/Julia-0.2.1.app/Contents/Resources/julia/bin/julia'"
+alias s="sound"
+alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
+alias hockey="~/Documents/hockey"
+alias highlight="ack -i --passthru"
+alias zshrc="vim ~/.zshrc"
+alias vimrc="vim ~/.vimrc"
+alias xsp-profiler="MONO_OPTIONS=--profile=log xsp4"
+alias dirs="dirs -v"
 
 function c () {
-    cd "$@" && ls
+  cd "$@" && ls
 }
 
 function grap {
-    grep -iIrn $1 *
+  grep -iIrn $1 *
 }
 
 function removeExtension {
-    for file in *.$1; do 
-        mv $file ${file%%.$1} 
-    done
+  for file in *.$1; do 
+      mv $file ${file%%.$1} 
+  done
 }
 
 function volume {
-    osascript -e "set Volume $@"
+  osascript -e "set Volume $@"
 }
 
 function lastModified {
-    find $1 -type f -mtime +1 -not -path "*/.hg/*" 
+  find $1 -type f -ctime -0 -not -path "*/.hg/*" 
+}
+
+function findTag {
+  mdfind "kMDItemUserTags == $@"
 }
 
 # Set to this to use case-sensitive completion
@@ -80,26 +82,31 @@ function lastModified {
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git autojump brew compleat mercurial npm web-search history-substring-search)
 
+DIRSTACKSIZE=6
+setopt autopushd pushdminus pushdsilent pushdtohome
+
+# use vim as the visual editor
+export VISUAL=vim
+export EDITOR=$VISUAL
+
 source $ZSH/oh-my-zsh.sh
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/.bin/tmuxinator.zsh
 unsetopt correct_all
 
 # Customize to your needs...
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/Users/rich/bin:/Applications/Sublime\ Text.app/Contents/SharedSupport/bin:/usr/local/share/npm/bin
+export LD_LIBRARY_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib
 
 bindkey -v
 bindkey -M viins '^r' history-incremental-search-backward
 
-if [[$OS == "mac"]]; then
-  source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-  source ~/.bin/tmuxinator.zsh
-
-  defaults write -g InitialKeyRepeat -int 10
-  defaults write -g KeyRepeat -int 1
-  defaults write -g ApplePressEndHoldEnabled -bool false
-
-  export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/Users/rich/bin:/Applications/Sublime\ Text.app/Contents/SharedSupport/bin:/usr/local/share/npm/bin
-fi
+defaults write -g InitialKeyRepeat -int 10
+defaults write -g KeyRepeat -int 1
 
 zmodload zsh/net/tcp
+defaults write -g ApplePressEndHoldEnabled -bool false
 export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
 export HOMEBREW_TEMP=~/tmp 
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+

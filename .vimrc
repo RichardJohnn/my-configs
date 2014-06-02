@@ -19,6 +19,7 @@ Bundle 'rizzatti/dash.vim'
 Bundle 'wting/rust.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'wesQ3/vim-windowswap'
+Bundle 'bling/vim-airline'
 
 "Language autocompletion
 Bundle 'JSON.vim'
@@ -68,6 +69,7 @@ nmap <CR> o<Esc>
 
 " Make the mouse work
 set mouse=a
+set ttymouse=sgr
 
 " Turn on auto indenting for pasted code
 set pastetoggle=<F2>
@@ -97,5 +99,6 @@ augroup END
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
 let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " tmux
-let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
-let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+"let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+"let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+
