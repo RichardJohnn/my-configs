@@ -5,7 +5,7 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="norm"
+ZSH_THEME="avit"
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
@@ -14,7 +14,7 @@ alias J="/Applications/j64-701/bin/jconsole; exit;"
 alias rake="noglob rake" # allows square brackts for rake task invocation
 alias brake='noglob bundle exec rake' # execute the bundled rake gem
 alias srake='noglob sudo rake' # noglob must come before sudo
-alias sbrake='noglob sudo bundle exec rake' # altogether now ... 
+alias sbrake='noglob sudo bundle exec rake' # altogether now ...
 alias julia="exec '/Applications/Julia-0.2.1.app/Contents/Resources/julia/bin/julia'"
 alias s="sound"
 alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
@@ -24,6 +24,7 @@ alias zshrc="vim ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
 alias xsp-profiler="MONO_OPTIONS=--profile=log xsp4"
 alias dirs="dirs -v"
+alias omni="mono /Users/rich/.vim/bundle/YouCompleteMe/python/ycm/completers/cs/OmniSharpServer/OmniSharp/bin/Debug/OmniSharp.exe -v -s ~/eflex/WebApi/EFlex.sln"
 
 function c () {
   cd "$@" && ls
@@ -34,8 +35,8 @@ function grap {
 }
 
 function removeExtension {
-  for file in *.$1; do 
-      mv $file ${file%%.$1} 
+  for file in *.$1; do
+      mv $file ${file%%.$1}
   done
 }
 
@@ -44,7 +45,7 @@ function volume {
 }
 
 function lastModified {
-  find $1 -type f -ctime -0 -not -path "*/.hg/*" 
+  find $1 -type f -ctime -0 -not -path "*/.hg/*"
 }
 
 function findTag {
@@ -80,7 +81,7 @@ function findTag {
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(git autojump brew compleat mercurial npm web-search history-substring-search)
+plugins=(git autojump brew compleat mercurial npm history-substring-search)
 
 DIRSTACKSIZE=6
 setopt autopushd pushdminus pushdsilent pushdtohome
@@ -92,7 +93,11 @@ export EDITOR=$VISUAL
 source $ZSH/oh-my-zsh.sh
 source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source ~/.bin/tmuxinator.zsh
+source ~/.profile
 unsetopt correct_all
+
+# ZSH Higher Order Functions
+source ~/repos/my-configs/functional.zsh
 
 # Customize to your needs...
 export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/Users/rich/bin:/Applications/Sublime\ Text.app/Contents/SharedSupport/bin:/usr/local/share/npm/bin
@@ -107,6 +112,9 @@ defaults write -g KeyRepeat -int 1
 zmodload zsh/net/tcp
 defaults write -g ApplePressEndHoldEnabled -bool false
 export VAGRANT_DEFAULT_PROVIDER='vmware_fusion'
-export HOMEBREW_TEMP=~/tmp 
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+export HOMEBREW_TEMP=~/tmp
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+export PATH="$PATH:$HOME/repos/sdb/bin" # Add RVM to PATH for scripting
 

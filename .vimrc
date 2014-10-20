@@ -8,11 +8,13 @@ call vundle#rc()
 Bundle 'gmarik/vundle'
 Bundle 'rails.vim'
 Bundle 'taglist.vim'
+
 Bundle 'The-NERD-tree'
+let NERDTreeQuitOnOpen=1
+Bundle 'The-NERD-Commenter'
+
 Bundle 'vcscommand.vim'
 Bundle 'project.tar.gz'
-Bundle 'AutoComplPop'
-Bundle 'The-NERD-Commenter'
 Bundle 'surround.vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'rizzatti/funcoo.vim'
@@ -22,14 +24,19 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'wesQ3/vim-windowswap'
 Bundle 'Lokaltog/powerline'
 
-"Bundle 'myusuf3/numbers.vim'
 Bundle 'bling/vim-airline'
 Bundle 'nathanaelkane/vim-indent-guides'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
 Bundle 'ludovicchabant/vim-lawrencium'
 
+Bundle 'kien/ctrlp.vim'
+Bundle 'JazzCore/ctrlp-cmatcher'
+Bundle 'tpope/vim-dispatch'
+Bundle 'rking/ag.vim'
+
 "Language autocompletion
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'JSON.vim'
 Bundle 'cocoa.vim'
 Bundle 'scala.vim'
@@ -38,7 +45,8 @@ Bundle 'Hackerpilot/Dscanner'
 Bundle 'VimClojure'
 Bundle 'haskell.vim'
 Bundle 'checksyntax-B'
-Bundle 'vim-coffee-script'
+Bundle 'kchmck/vim-coffee-script'
+Bundle 'noc7c9/vim-iced-coffee-script'
 Bundle 'dbext.vim'
 Bundle 'SQLComplete.vim'
 Bundle 'digitaltoad/vim-jade'
@@ -48,21 +56,25 @@ Bundle 'go.vim'
 Bundle 'adimit/prolog.vim'
 Bundle 'leafgarland/typescript-vim'
 Bundle 'nono/vim-handlebars'
-Bundle 'darthdeus/vim-emblem'
 Bundle 'applescript.vim'
 Bundle 'kongo2002/fsharp-vim'
+Bundle 'OrangeT/vim-csharp'
 Bundle 'elixir-lang/vim-elixir'
 Bundle 'tpope/vim-cucumber'
 Bundle 'guns/vim-clojure-static'
 Bundle 'tpope/vim-classpath.git'
 Bundle 'tpope/vim-fireplace'
-Bundle 'kien/ctrlp.vim'
-Bundle 'rking/ag.vim'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'tpope/vim-dispatch'
+
 Bundle 'nosami/Omnisharp'
+let g:Omnisharp_start_server = 0
+
+Bundle 'heartsentwined/vim-emblem'
+
+Bundle 'flazz/vim-colorschemes'
 
 set showcmd
+set nobackup
+set noswapfile
 set smartindent
 set tabstop=2
 set shiftwidth=2
@@ -74,9 +86,18 @@ set number
 set incsearch
 set autowrite
 set t_Co=256
-set autoread
 set nohlsearch
 set splitright splitbelow
+set completeopt=menu,menuone
+set history=1000
+set undolevels=1000
+set wrap lbr
+
+colorscheme lodestone
+"colorscheme summerfruit256
+
+" autoreload
+au FocusGained,BufEnter * :silent! !
 
 " Incremental search as you type
 set incsearch
@@ -90,7 +111,6 @@ set mouse=a
 set ttymouse=sgr
 
 syntax on
-
 
 "~~~~~~~~~~VIM-AIRLINE~~~~~~~~~~"
 "" Enable powerline fonts
@@ -111,12 +131,19 @@ set pastetoggle=<F2>
 
 filetype plugin indent on
 
+autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
+
+let g:agprg="ag --smart-case --column"
+
 " use silver searcher for grep
 if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor
-  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+  set grepprg=ag\ --nogroup
+  let g:ctrlp_user_command = 'ag %s -S -l --nocolor -g ""'
   let g:ctrlp_use_caching = 0
 endif
+
+" use cmatch for ctrlp
+let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 
 " Remove trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
@@ -128,13 +155,6 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
-"set cursorline
-"augroup CursorLine
-    "au!
-    "au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-    "au WinLeave * setlocal nocursorline
-"augroup END
-
 " no current line highlight
 hi clear CursorLine
 augroup CLClear
@@ -142,10 +162,15 @@ augroup CLClear
 augroup END
 
 " highlight current line number
-hi CursorLineNR cterm=bold ctermfg=Blue
+hi CursorLineNR cterm=bold
 augroup CLNRSet
   autocmd! ColorScheme * hi CursorLineNR cterm=bold
 augroup END
+
+set cursorline
+
+"  bracket highlights
+hi MatchParen cterm=bold ctermbg=none ctermfg=blue
 
 " iterm2 os x
 let &t_SI = "\<Esc>]50;CursorShape=1\x7"
@@ -154,8 +179,11 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 "let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
 "let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
 
+" search replace word under cursor
+nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
-map <silent> <C-s> :NERDTreeFind<CR>
+" find word under cursor
+nnoremap <Leader>f :Ag! <C-r><C-w> webApp/app
 
 augroup AutoReloadVimRC
   au!
@@ -163,11 +191,30 @@ augroup AutoReloadVimRC
   au BufWritePost $MYVIMRC so $MYVIMRC
 augroup END
 
-nnoremap <silent> <C-h> :vertical resize -5<cr>
 nnoremap <silent> <C-l> :vertical resize +5<cr>
+nnoremap <silent> <C-h> :vertical resize -5<cr>
+nnoremap <silent> <C-k> :resize +5<cr>
+nnoremap <silent> <C-j> :resize -5<cr>
 
-"~~~~~~~~~ULTISNIPS~~~~~~~~~~"
-let g:UltiSnipsExpandTrigger="<c-j>"
+nnoremap <F1> <nop>
+nnoremap Q <nop>
+nnoremap K <nop>
+"nnoremap <esc> :noh<return><esc>
+
+"Y to yank til end of line.. like C and D
+:map Y y$
 
 " Formatting for ag searching
 "let g:agprg="ag --smart-case --column"
+
+nnoremap <Leader>q :bp\|bd #<CR>
+
+
+augroup omnisharp_commands
+  autocmd FileType cs nnoremap gd :OmniSharpGotoDefinition<cr>
+  autocmd FileType cs nnoremap <leader>fu :OmniSharpFindUsages<cr>
+  autocmd FileType cs nnoremap <leader>x  :OmniSharpFixIssue<cr>
+  autocmd FileType cs nnoremap <leader>t  :OmniSharpFindType<cr>
+augroup END
+"rename with dialog
+nnoremap <F2> :OmniSharpRename<cr>
