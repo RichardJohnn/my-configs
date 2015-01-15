@@ -5,12 +5,28 @@ ZSH=$HOME/.oh-my-zsh
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="avit"
+ZSH_THEME="riblet"
+
+## Command history configuration
+if [ -z "$HISTFILE" ]; then
+    HISTFILE=$HOME/.zsh_history
+fi
+
+HISTSIZE=10000
+SAVEHIST=10000
+
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt inc_append_history
+setopt share_history
 
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias J="/Applications/j64-701/bin/jconsole; exit;"
+alias J="/Applications/j64-701/bin/jconsole"
 alias rake="noglob rake" # allows square brackts for rake task invocation
 alias brake='noglob bundle exec rake' # execute the bundled rake gem
 alias srake='noglob sudo rake' # noglob must come before sudo
@@ -18,13 +34,13 @@ alias sbrake='noglob sudo bundle exec rake' # altogether now ...
 alias julia="exec '/Applications/Julia-0.2.1.app/Contents/Resources/julia/bin/julia'"
 alias s="sound"
 alias vlc="/Applications/VLC.app/Contents/MacOS/VLC"
-alias hockey="~/Documents/hockey"
 alias highlight="ack -i --passthru"
 alias zshrc="vim ~/.zshrc"
 alias vimrc="vim ~/.vimrc"
 alias xsp-profiler="MONO_OPTIONS=--profile=log xsp4"
 alias dirs="dirs -v"
 alias omni="mono /Users/rich/.vim/bundle/YouCompleteMe/python/ycm/completers/cs/OmniSharpServer/OmniSharp/bin/Debug/OmniSharp.exe -v -s ~/eflex/WebApi/EFlex.sln"
+alias cling="/Users/rich/Documents/cling/inst/bin/cling"
 
 function c () {
   cd "$@" && ls
@@ -100,7 +116,7 @@ unsetopt correct_all
 source ~/repos/my-configs/functional.zsh
 
 # Customize to your needs...
-export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/Users/rich/bin:/Applications/Sublime\ Text.app/Contents/SharedSupport/bin:/usr/local/share/npm/bin
+export PATH=/usr/local/bin:/usr/local/sbin:$PATH:/usr/bin:/bin:/usr/sbin:/sbin:/Users/rich/bin:/Applications/Sublime\ Text.app/Contents/SharedSupport/bin
 export LD_LIBRARY_PATH=/Library/Frameworks/Mono.framework/Versions/Current/lib
 
 bindkey -v
@@ -118,3 +134,7 @@ export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
 export PATH="$PATH:$HOME/repos/sdb/bin" # Add RVM to PATH for scripting
 
+#virtualenvwrapper
+source /usr/local/bin/virtualenvwrapper.sh
+
+source /sw/bin/init.sh
