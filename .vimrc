@@ -1,5 +1,6 @@
 set nocompatible
 
+syntax on
 filetype off
 
 set rtp+=~/.vim/bundle/vundle/
@@ -11,7 +12,10 @@ Bundle 'taglist.vim'
 
 Bundle 'The-NERD-tree'
 let NERDTreeQuitOnOpen=1
+let NERDTreeMapOpenVSplit='v'
 Bundle 'The-NERD-Commenter'
+
+Bundle 'godlygeek/tabular'
 
 Bundle 'vcscommand.vim'
 Bundle 'project.tar.gz'
@@ -26,8 +30,26 @@ Bundle 'Lokaltog/powerline'
 
 Bundle 'bling/vim-airline'
 Bundle 'nathanaelkane/vim-indent-guides'
+
+" if you use Vundle, load plugins:
+Bundle 'ervandew/supertab'
+Bundle 'Valloric/YouCompleteMe'
 Bundle 'SirVer/ultisnips'
 Bundle 'honza/vim-snippets'
+
+au FileType python set omnifunc=pythoncomplete#Complete
+let g:SuperTabDefaultCompletionType = "context"
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
+
+
 Bundle 'ludovicchabant/vim-lawrencium'
 
 Bundle 'kien/ctrlp.vim'
@@ -35,8 +57,10 @@ Bundle 'JazzCore/ctrlp-cmatcher'
 Bundle 'tpope/vim-dispatch'
 Bundle 'rking/ag.vim'
 
+Bundle 'AndrewRadev/switch.vim'
+nnoremap - :Switch<cr>
+
 "Language autocompletion
-Bundle 'Valloric/YouCompleteMe'
 Bundle 'JSON.vim'
 Bundle 'cocoa.vim'
 Bundle 'scala.vim'
@@ -64,6 +88,13 @@ Bundle 'tpope/vim-cucumber'
 Bundle 'guns/vim-clojure-static'
 Bundle 'tpope/vim-classpath.git'
 Bundle 'tpope/vim-fireplace'
+Bundle 'tpope/vim-leiningen'
+Bundle 'vim-scripts/paredit.vim'
+Bundle 'kien/rainbow_parentheses.vim'
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
 
 Bundle 'nosami/Omnisharp'
 let g:Omnisharp_start_server = 0
@@ -71,6 +102,12 @@ let g:Omnisharp_start_server = 0
 Bundle 'heartsentwined/vim-emblem'
 
 Bundle 'flazz/vim-colorschemes'
+
+Bundle 'chrisbra/NrrwRgn'
+
+Bundle 'sjl/gundo.vim'
+
+set nf=octal,hex,alpha
 
 set showcmd
 set nobackup
@@ -110,8 +147,6 @@ set mouse=a
   " make it work on the far right hand side of the screen
 set ttymouse=sgr
 
-syntax on
-
 "~~~~~~~~~~VIM-AIRLINE~~~~~~~~~~"
 "" Enable powerline fonts
 let g:airline_powerline_fonts=1
@@ -131,8 +166,10 @@ set pastetoggle=<F2>
 
 filetype plugin indent on
 
+
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
 
+" Formatting for ag searching
 let g:agprg="ag --smart-case --column"
 
 " use silver searcher for grep
@@ -183,11 +220,11 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
 " find word under cursor
-nnoremap <Leader>f :Ag! <C-r><C-w> webApp/app
+nnoremap <Leader>f :Ag! <C-r><C-w>
 
+" automatically reload vimrc when it's saved
 augroup AutoReloadVimRC
   au!
-  " automatically reload vimrc when it's saved
   au BufWritePost $MYVIMRC so $MYVIMRC
 augroup END
 
@@ -204,17 +241,30 @@ nnoremap K <nop>
 "Y to yank til end of line.. like C and D
 :map Y y$
 
-" Formatting for ag searching
-"let g:agprg="ag --smart-case --column"
-
 nnoremap <Leader>q :bp\|bd #<CR>
 
+" Get Code Issues and syntax errors
+let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
 
 augroup omnisharp_commands
+  autocmd!
+
+  autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
+
   autocmd FileType cs nnoremap gd :OmniSharpGotoDefinition<cr>
   autocmd FileType cs nnoremap <leader>fu :OmniSharpFindUsages<cr>
   autocmd FileType cs nnoremap <leader>x  :OmniSharpFixIssue<cr>
   autocmd FileType cs nnoremap <leader>t  :OmniSharpFindType<cr>
+  " Builds can also run asynchronously with vim-dispatch installed
+  autocmd FileType cs nnoremap <leader>b :wa!<cr>:OmniSharpBuildAsync<cr>
+  " automatic syntax check on events (TextChanged requires Vim 7.4)
+  autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
+  " Automatically add new cs files to the nearest project on save
+  autocmd BufWritePost *.cs call OmniSharp#AddToProject()
 augroup END
 "rename with dialog
 nnoremap <F2> :OmniSharpRename<cr>
+
+" disable auto comments
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
