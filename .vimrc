@@ -85,6 +85,8 @@ Bundle 'kongo2002/fsharp-vim'
 Bundle 'OrangeT/vim-csharp'
 Bundle 'elixir-lang/vim-elixir'
 Bundle 'tpope/vim-cucumber'
+Bundle 'zah/nimrod.vim'
+
 Bundle 'guns/vim-clojure-static'
 Bundle 'tpope/vim-classpath.git'
 Bundle 'tpope/vim-fireplace'
@@ -112,7 +114,6 @@ set nf=octal,hex,alpha
 set showcmd
 set nobackup
 set noswapfile
-set smartindent
 set tabstop=2
 set shiftwidth=2
 set expandtab
@@ -220,7 +221,8 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
 " find word under cursor
-nnoremap <Leader>f :Ag! <C-r><C-w>
+nnoremap <Leader>f :Ag! <C-r><C-w> ~/eflex
+nnoremap <Leader>F :Ag! <C-r><C-w> ~/eflex/webApp/app
 
 " automatically reload vimrc when it's saved
 augroup AutoReloadVimRC
@@ -249,7 +251,10 @@ let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
 augroup omnisharp_commands
   autocmd!
 
-  autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
+  "autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
+
+   "show type information automatically when the cursor stops moving
+  "autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
 
   autocmd FileType cs nnoremap gd :OmniSharpGotoDefinition<cr>
   autocmd FileType cs nnoremap <leader>fu :OmniSharpFindUsages<cr>
@@ -265,6 +270,16 @@ augroup END
 "rename with dialog
 nnoremap <F2> :OmniSharpRename<cr>
 
+autocmd BufRead,BufNewFile *.cs setlocal tabstop=4 shiftwidth=4 expandtab
+
 " disable auto comments
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
+:command! Pp %!python -m json.tool
+
+" set vim to chdir for each file
+if exists('+autochdir')
+    set autochdir
+else
+    autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
+endif
