@@ -1,42 +1,43 @@
-set nocompatible
-
-syntax on
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call plug#begin('~/.vim/plugged')
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-fugitive'
 
-Bundle 'gmarik/vundle'
-Bundle 'rails.vim'
-Bundle 'taglist.vim'
+Plug 'kien/ctrlp.vim'
+"Plug 'JazzCore/ctrlp-cmatcher'
 
-Bundle 'The-NERD-tree'
+Plug 'rails.vim'
+Plug 'taglist.vim'
+
+Plug 'The-NERD-tree'
 let NERDTreeQuitOnOpen=1
 let NERDTreeMapOpenVSplit='v'
-Bundle 'The-NERD-Commenter'
+Plug 'The-NERD-Commenter'
 
-Bundle 'godlygeek/tabular'
+Plug 'godlygeek/tabular'
 
-Bundle 'vcscommand.vim'
-Bundle 'project.tar.gz'
-Bundle 'surround.vim'
-Bundle 'scrooloose/syntastic'
-Bundle 'rizzatti/funcoo.vim'
-Bundle 'rizzatti/dash.vim'
-Bundle 'wting/rust.vim'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'wesQ3/vim-windowswap'
-Bundle 'Lokaltog/powerline'
+Plug 'vcscommand.vim'
+Plug 'project.tar.gz'
+Plug 'tpope/vim-surround'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'scrooloose/syntastic'
+Plug 'rizzatti/funcoo.vim'
+Plug 'rizzatti/dash.vim'
+Plug 'wting/rust.vim'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'wesQ3/vim-windowswap'
+Plug 'Lokaltog/powerline'
 
-Bundle 'bling/vim-airline'
-Bundle 'nathanaelkane/vim-indent-guides'
+Plug 'bling/vim-airline'
+Plug 'nathanaelkane/vim-indent-guides'
 
 " if you use Vundle, load plugins:
-Bundle 'ervandew/supertab'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'SirVer/ultisnips'
-Bundle 'honza/vim-snippets'
+Plug 'ervandew/supertab'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
+Plug 'Valloric/YouCompleteMe', {'do' : './install.sh --clang-completer --system-libclang' }
 au FileType python set omnifunc=pythoncomplete#Complete
 let g:SuperTabDefaultCompletionType = "context"
 " make YCM compatible with UltiSnips (using supertab)
@@ -49,74 +50,85 @@ let g:UltiSnipsExpandTrigger = "<tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
 let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
+" coffeescript lint highlighting
+let g:coffeeCheckHighlightErrorLine = 0
 
-Bundle 'ludovicchabant/vim-lawrencium'
+Plug 'ludovicchabant/vim-lawrencium'
 
-Bundle 'kien/ctrlp.vim'
-Bundle 'JazzCore/ctrlp-cmatcher'
-Bundle 'tpope/vim-dispatch'
-Bundle 'rking/ag.vim'
+Plug 'tpope/vim-dispatch'
+Plug 'rking/ag.vim'
 
-Bundle 'AndrewRadev/switch.vim'
+Plug 'AndrewRadev/switch.vim'
 nnoremap - :Switch<cr>
 
 "Language autocompletion
-Bundle 'JSON.vim'
-Bundle 'cocoa.vim'
-Bundle 'scala.vim'
-Bundle 'Erlang-plugin-package'
-Bundle 'Hackerpilot/Dscanner'
-Bundle 'VimClojure'
-Bundle 'haskell.vim'
-Bundle 'checksyntax-B'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'noc7c9/vim-iced-coffee-script'
-Bundle 'dbext.vim'
-Bundle 'SQLComplete.vim'
-Bundle 'digitaltoad/vim-jade'
-Bundle 'wavded/vim-stylus'
-Bundle 'myhere/vim-nodejs-complete'
-Bundle 'go.vim'
-Bundle 'adimit/prolog.vim'
-Bundle 'leafgarland/typescript-vim'
-Bundle 'nono/vim-handlebars'
-Bundle 'applescript.vim'
-Bundle 'kongo2002/fsharp-vim'
-Bundle 'OrangeT/vim-csharp'
-Bundle 'elixir-lang/vim-elixir'
-Bundle 'tpope/vim-cucumber'
-Bundle 'zah/nimrod.vim'
+Plug 'JSON.vim'
+Plug 'cocoa.vim'
+Plug 'scala.vim'
+Plug 'Erlang-plugin-package'
+Plug 'Hackerpilot/Dscanner'
+Plug 'VimClojure'
+Plug 'haskell.vim'
+Plug 'checksyntax-B'
+Plug 'kchmck/vim-coffee-script'
+Plug 'noc7c9/vim-iced-coffee-script'
+Plug 'othree/coffee-check.vim'
+Plug 'dbext.vim'
+Plug 'SQLComplete.vim'
+Plug 'digitaltoad/vim-jade'
+Plug 'wavded/vim-stylus'
+Plug 'myhere/vim-nodejs-complete'
+Plug 'go.vim'
+Plug 'adimit/prolog.vim'
+Plug 'leafgarland/typescript-vim'
+Plug 'nono/vim-handlebars'
+Plug 'applescript.vim'
+Plug 'kongo2002/fsharp-vim'
+Plug 'OrangeT/vim-csharp'
+Plug 'elixir-lang/vim-elixir'
+Plug 'tpope/vim-cucumber'
+Plug 'zah/nimrod.vim'
 
-Bundle 'guns/vim-clojure-static'
-Bundle 'tpope/vim-classpath.git'
-Bundle 'tpope/vim-fireplace'
-Bundle 'tpope/vim-leiningen'
-Bundle 'vim-scripts/paredit.vim'
-Bundle 'kien/rainbow_parentheses.vim'
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
+Plug 'guns/vim-clojure-static'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-leiningen'
+Plug 'vim-scripts/paredit.vim'
+"Plug 'kien/rainbow_parentheses.vim'
+"au VimEnter * RainbowParenthesesToggle
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
 
-Bundle 'nosami/Omnisharp'
-let g:Omnisharp_start_server = 0
+Plug 'nosami/Omnisharp'
+"let g:Omnisharp_start_server = 0
 
-Bundle 'heartsentwined/vim-emblem'
+Plug 'heartsentwined/vim-emblem'
 
-Bundle 'flazz/vim-colorschemes'
+Plug 'flazz/vim-colorschemes'
 
-Bundle 'chrisbra/NrrwRgn'
+Plug 'chrisbra/NrrwRgn'
 
-Bundle 'sjl/gundo.vim'
+Plug 'sjl/gundo.vim'
+
+call plug#end()
+
+filetype plugin indent on
+syntax enable
 
 set nf=octal,hex,alpha
 
 set showcmd
 set nobackup
 set noswapfile
+
+set autoindent
+set smartindent
 set tabstop=2
+set smarttab
 set shiftwidth=2
+set shiftround
 set expandtab
+
 set laststatus=2
 set ignorecase
 set smartcase
@@ -130,6 +142,7 @@ set completeopt=menu,menuone
 set history=1000
 set undolevels=1000
 set wrap lbr
+set wildmenu
 
 colorscheme lodestone
 "colorscheme summerfruit256
@@ -146,7 +159,7 @@ set hlsearch
 " Make the mouse work
 set mouse=a
   " make it work on the far right hand side of the screen
-set ttymouse=sgr
+"set ttymouse=sgr
 
 "~~~~~~~~~~VIM-AIRLINE~~~~~~~~~~"
 "" Enable powerline fonts
@@ -165,13 +178,19 @@ nmap <CR> o<Esc>
 " Turn on auto indenting for pasted code
 set pastetoggle=<F2>
 
-filetype plugin indent on
 
 
 autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
 
 " Formatting for ag searching
-let g:agprg="ag --smart-case --column"
+let g:ag_prg="ag --smart-case --column"
+
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+
+
+" use cmatch for ctrlp
+"let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
 
 " use silver searcher for grep
 if executable('ag')
@@ -180,8 +199,8 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-" use cmatch for ctrlp
-let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+
 
 " Remove trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
@@ -193,19 +212,17 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
-" no current line highlight
-hi clear CursorLine
-augroup CLClear
-  autocmd! ColorScheme * hi clear CursorLine
-augroup END
+" current line stuff
+  "set cursorline
 
-" highlight current line number
-hi CursorLineNR cterm=bold
-augroup CLNRSet
-  autocmd! ColorScheme * hi CursorLineNR cterm=bold
-augroup END
+  " highlight current line number
+  "hi CursorLineNR cterm=bold
+  "augroup CLNRSet
+    "autocmd! ColorScheme * hi CursorLineNR cterm=bold
+  "augroup END
 
-set cursorline
+"autocmd WinEnter * setlocal cursorline
+"autocmd WinLeave * setlocal nocursorline
 
 "  bracket highlights
 hi MatchParen cterm=bold ctermbg=none ctermfg=blue
@@ -223,6 +240,7 @@ nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 " find word under cursor
 nnoremap <Leader>f :Ag! <C-r><C-w> ~/eflex
 nnoremap <Leader>F :Ag! <C-r><C-w> ~/eflex/webApp/app
+nnoremap <Leader>e :Ag! <C-r><C-w> ~/eflex/webApp/app/**/*.emblem
 
 " automatically reload vimrc when it's saved
 augroup AutoReloadVimRC
@@ -243,8 +261,17 @@ nnoremap K <nop>
 "Y to yank til end of line.. like C and D
 :map Y y$
 
+"disable command history
+map q: :q
+
+"save!
+map :W :w
+
+" close file but keep buffer open
 nnoremap <Leader>q :bp\|bd #<CR>
 
+" search for visually selected text
+vnoremap // y/<C-R>"<CR>
 " Get Code Issues and syntax errors
 let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
 
@@ -252,10 +279,6 @@ augroup omnisharp_commands
   autocmd!
 
   "autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
-
-   "show type information automatically when the cursor stops moving
-  "autocmd CursorHold *.cs call OmniSharp#TypeLookupWithoutDocumentation()
-
   autocmd FileType cs nnoremap gd :OmniSharpGotoDefinition<cr>
   autocmd FileType cs nnoremap <leader>fu :OmniSharpFindUsages<cr>
   autocmd FileType cs nnoremap <leader>x  :OmniSharpFixIssue<cr>
@@ -270,7 +293,7 @@ augroup END
 "rename with dialog
 nnoremap <F2> :OmniSharpRename<cr>
 
-autocmd BufRead,BufNewFile *.cs setlocal tabstop=4 shiftwidth=4 expandtab
+autocmd FileType cs setlocal tabstop=4 shiftwidth=4 expandtab
 
 " disable auto comments
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
@@ -283,3 +306,5 @@ if exists('+autochdir')
 else
     autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
 endif
+
+let g:ctrlp_custom_ignore = 'tmp$\|\.git$\|\.hg$\'
