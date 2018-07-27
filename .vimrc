@@ -1,121 +1,63 @@
 filetype off
 
 call plug#begin('~/.vim/plugged')
-Plug 'tpope/vim-sensible'
+Plug 'rizzatti/dash.vim'
+
+Plug 'guns/vim-sexp'
+Plug 'tpope/vim-sexp-mappings-for-regular-people'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fireplace'
+Plug 'tpope/vim-leiningen'
 
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'JazzCore/ctrlp-cmatcher'
+Plug 'nixprime/cpsm', { 'do': 'env PY3=ON ./install.sh' }
 
-Plug 'rails.vim'
-Plug 'taglist.vim'
-
-Plug 'The-NERD-tree'
-let NERDTreeQuitOnOpen=1
+Plug 'vim-scripts/The-NERD-tree'
+let NERDQuitOnOpen=1
 let NERDTreeMapOpenVSplit='v'
-Plug 'The-NERD-Commenter'
+Plug 'vim-scripts/The-NERD-Commenter'
 
 Plug 'godlygeek/tabular'
-
-Plug 'vcscommand.vim'
-Plug 'project.tar.gz'
-Plug 'tpope/vim-surround'
-Plug 'AndrewRadev/splitjoin.vim'
-Plug 'scrooloose/syntastic'
-Plug 'rizzatti/funcoo.vim'
-Plug 'rizzatti/dash.vim'
-Plug 'wting/rust.vim'
-Plug 'Lokaltog/vim-easymotion'
 Plug 'wesQ3/vim-windowswap'
-Plug 'Lokaltog/powerline'
-
-Plug 'bling/vim-airline'
+Plug 'itchyny/lightline.vim'
 Plug 'nathanaelkane/vim-indent-guides'
-
-" if you use Vundle, load plugins:
 Plug 'ervandew/supertab'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-
-Plug 'Valloric/YouCompleteMe', {'do' : './install.sh --clang-completer --system-libclang' }
-au FileType python set omnifunc=pythoncomplete#Complete
-let g:SuperTabDefaultCompletionType = "context"
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-" coffeescript lint highlighting
-let g:coffeeCheckHighlightErrorLine = 0
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+let g:deoplete#enable_at_startup = 1
 
 Plug 'ludovicchabant/vim-lawrencium'
-
-Plug 'tpope/vim-dispatch'
 Plug 'rking/ag.vim'
-
+Plug 'gabesoft/vim-ags'
 Plug 'AndrewRadev/switch.vim'
 nnoremap - :Switch<cr>
 
 "Language autocompletion
-Plug 'JSON.vim'
-Plug 'cocoa.vim'
-Plug 'scala.vim'
-Plug 'Erlang-plugin-package'
-Plug 'Hackerpilot/Dscanner'
-Plug 'VimClojure'
-Plug 'haskell.vim'
-Plug 'checksyntax-B'
 Plug 'kchmck/vim-coffee-script'
-Plug 'noc7c9/vim-iced-coffee-script'
-Plug 'othree/coffee-check.vim'
-Plug 'dbext.vim'
-Plug 'SQLComplete.vim'
-Plug 'digitaltoad/vim-jade'
+Plug 'w0rp/ale'
 Plug 'wavded/vim-stylus'
-Plug 'myhere/vim-nodejs-complete'
-Plug 'go.vim'
-Plug 'adimit/prolog.vim'
-Plug 'leafgarland/typescript-vim'
-Plug 'nono/vim-handlebars'
-Plug 'applescript.vim'
-Plug 'kongo2002/fsharp-vim'
-Plug 'OrangeT/vim-csharp'
-Plug 'elixir-lang/vim-elixir'
-Plug 'tpope/vim-cucumber'
-Plug 'zah/nimrod.vim'
+"Plug 'adimit/prolog.vim'
+Plug 'uarun/vim-protobuf'
 
 Plug 'guns/vim-clojure-static'
-Plug 'tpope/vim-fireplace'
-Plug 'tpope/vim-leiningen'
-Plug 'vim-scripts/paredit.vim'
-"Plug 'kien/rainbow_parentheses.vim'
-"au VimEnter * RainbowParenthesesToggle
-"au Syntax * RainbowParenthesesLoadRound
-"au Syntax * RainbowParenthesesLoadSquare
-"au Syntax * RainbowParenthesesLoadBraces
-
-Plug 'nosami/Omnisharp'
-"let g:Omnisharp_start_server = 0
+"Plug 'vim-scripts/VimClojure'
 
 Plug 'heartsentwined/vim-emblem'
-
 Plug 'flazz/vim-colorschemes'
-
 Plug 'chrisbra/NrrwRgn'
-
-Plug 'sjl/gundo.vim'
+Plug 'djoshea/vim-autoread'
 
 call plug#end()
 
+set shell=bash\ -l
+
 filetype plugin indent on
-syntax enable
+syntax on
 
 set nf=octal,hex,alpha
+
+set list
 
 set showcmd
 set nobackup
@@ -131,6 +73,7 @@ set expandtab
 
 set laststatus=2
 set ignorecase
+set infercase
 set smartcase
 set number
 set incsearch
@@ -143,12 +86,21 @@ set history=1000
 set undolevels=1000
 set wrap lbr
 set wildmenu
+set lazyredraw
 
+"highlight ColorColumn ctermbg=236 guibg=#2c2d27
+"let &colorcolumn=join(range(81,999),",")
+"let &colorcolumn="80,".join(range(120,999),",")
+
+"colorscheme desert
 colorscheme lodestone
 "colorscheme summerfruit256
 
 " autoreload
-au FocusGained,BufEnter * :silent! !
+"au FocusGained,BufEnter * :silent! !
+
+" autoreload when file changes on disk
+"set autoread
 
 " Incremental search as you type
 set incsearch
@@ -161,36 +113,22 @@ set mouse=a
   " make it work on the far right hand side of the screen
 "set ttymouse=sgr
 
-"~~~~~~~~~~VIM-AIRLINE~~~~~~~~~~"
-"" Enable powerline fonts
-let g:airline_powerline_fonts=1
-
-" Set airline theme
-let g:airline_theme="murmur"
-
-" "Enable mercurial support
-let g:airline_enable_lawrencium=1
-
-" insert new lines from normal mode
-nmap <S-Enter> O<Esc>
-nmap <CR> o<Esc>
-
-" Turn on auto indenting for pasted code
-set pastetoggle=<F2>
-
-
-
-autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
+"ctrl-p
+let g:ctrlp_max_files=0
+let g:ctrlp_max_depth=45
+let g:ctrlp_switch_buffer = 'et'
 
 " Formatting for ag searching
 let g:ag_prg="ag --smart-case --column"
+" start searching from your project root instead of the cwd
+let g:ag_working_path_mode='r'
 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 
-
 " use cmatch for ctrlp
 "let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
+let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
 
 " use silver searcher for grep
 if executable('ag')
@@ -199,37 +137,67 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+if executable('rg')
+  set grepprg=rg\ --vimgrep
+  let g:ctrlp_user_command = 'rg --files  %s'
+endif
 
+let g:rg_derive_root = 'true'
+
+let g:ctrlp_custom_ignore = 'tmp$\|\.git$\|\.hg$\'
+
+" ~~~ light line ~~~
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"⭤":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
+      \ },
+      \ 'separator': { 'left': '|', 'right': '|' },
+      \ 'subseparator': { 'left': '>', 'right': '>' }
+      \ }
+
+function! LightLineFilename()
+  return expand('%')
+endfunction
+
+" insert new lines from normal mode
+nmap <CR> o<Esc>
+
+" indenting
+set foldmethod=indent
+set foldenable
+set foldlevelstart=10
+set foldnestmax=10
+
+autocmd BufNewFile,BufReadPost *.coffee setl foldmethod=indent nofoldenable
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 " Remove trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
 
 " block cursor in normal mode
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+"set guicursor=n-v-c:block-Cursor/lCursor-blinkon0,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
 
 " Allow saving of files as sudo when I forgot to start vim using sudo.
 cmap w!! w !sudo tee > /dev/null %
 
 " current line stuff
-  "set cursorline
+set cursorline
 
-  " highlight current line number
-  "hi CursorLineNR cterm=bold
-  "augroup CLNRSet
-    "autocmd! ColorScheme * hi CursorLineNR cterm=bold
-  "augroup END
+"highlight current line number
+hi CursorLineNR cterm=bold
+augroup CLNRSet
+  autocmd! ColorScheme * hi CursorLineNR cterm=bold
+augroup END
 
-"autocmd WinEnter * setlocal cursorline
-"autocmd WinLeave * setlocal nocursorline
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
 
 "  bracket highlights
 hi MatchParen cterm=bold ctermbg=none ctermfg=blue
 
-" iterm2 os x
-let &t_SI = "\<Esc>]50;CursorShape=1\x7"
-let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " tmux
 "let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
 "let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
@@ -237,15 +205,22 @@ let &t_EI = "\<Esc>]50;CursorShape=0\x7"
 " search replace word under cursor
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
 
-" find word under cursor
-nnoremap <Leader>f :Ag! <C-r><C-w> ~/eflex
-nnoremap <Leader>F :Ag! <C-r><C-w> ~/eflex/webApp/app
-nnoremap <Leader>e :Ag! <C-r><C-w> ~/eflex/webApp/app/**/*.emblem
+"remove highlight
+nnoremap <leader><space> :nohlsearch<CR>
 
-" automatically reload vimrc when it's saved
+"fix fucked up tab issue
+nnoremap <leader>t :set expandtab <bar> :retab<CR>
+
+" find word under cursor
+nnoremap <Leader>f  :Ag! <C-r><C-w>
+nnoremap <Leader>F  :Ag! <C-r><C-w> /Users/rich/eflex/<C-Left><Left>
+nnoremap <Leader>E  :Ag! <C-r><C-w> /Users/rich/eflex/webApp/app/**/*.emblem<C-Left><Left>
+nnoremap <leader>ag :Ag!  /Users/rich/eflex/<C-Left><Left>
+
+"automatically reload vimrc when it's saved
 augroup AutoReloadVimRC
   au!
-  au BufWritePost $MYVIMRC so $MYVIMRC
+  au BufWritePost ~/.vimrc so ~/.vimrc
 augroup END
 
 nnoremap <silent> <C-l> :vertical resize +5<cr>
@@ -253,13 +228,9 @@ nnoremap <silent> <C-h> :vertical resize -5<cr>
 nnoremap <silent> <C-k> :resize +5<cr>
 nnoremap <silent> <C-j> :resize -5<cr>
 
-nnoremap <F1> <nop>
-nnoremap Q <nop>
-nnoremap K <nop>
-"nnoremap <esc> :noh<return><esc>
 
 "Y to yank til end of line.. like C and D
-:map Y y$
+map Y y$
 
 "disable command history
 map q: :q
@@ -272,39 +243,22 @@ nnoremap <Leader>q :bp\|bd #<CR>
 
 " search for visually selected text
 vnoremap // y/<C-R>"<CR>
-" Get Code Issues and syntax errors
-let g:syntastic_cs_checkers = ['syntax', 'semantic', 'issues']
-
-augroup omnisharp_commands
-  autocmd!
-
-  "autocmd FileType cs setlocal omnifunc=OmniSharp#Complete
-  autocmd FileType cs nnoremap gd :OmniSharpGotoDefinition<cr>
-  autocmd FileType cs nnoremap <leader>fu :OmniSharpFindUsages<cr>
-  autocmd FileType cs nnoremap <leader>x  :OmniSharpFixIssue<cr>
-  autocmd FileType cs nnoremap <leader>t  :OmniSharpFindType<cr>
-  " Builds can also run asynchronously with vim-dispatch installed
-  autocmd FileType cs nnoremap <leader>b :wa!<cr>:OmniSharpBuildAsync<cr>
-  " automatic syntax check on events (TextChanged requires Vim 7.4)
-  autocmd BufEnter,TextChanged,InsertLeave *.cs SyntasticCheck
-  " Automatically add new cs files to the nearest project on save
-  autocmd BufWritePost *.cs call OmniSharp#AddToProject()
-augroup END
-"rename with dialog
-nnoremap <F2> :OmniSharpRename<cr>
-
-autocmd FileType cs setlocal tabstop=4 shiftwidth=4 expandtab
 
 " disable auto comments
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
 :command! Pp %!python -m json.tool
 
-" set vim to chdir for each file
-if exists('+autochdir')
-    set autochdir
-else
-    autocmd BufEnter * silent! lcd %:p:h:gs/ /\\ /
-endif
+"autochdir:
+"autocmd BufEnter * silent! lcd %:p:h
 
-let g:ctrlp_custom_ignore = 'tmp$\|\.git$\|\.hg$\'
+" Open files located in the same dir in with the current file is edited
+map <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+nnoremap <F1> <nop>
+nnoremap Q <nop>
+"nnoremap <silent> K <nop>
+
+let g:python_host_prog = '/usr/local/bin/python2'
+let g:python3_host_prog = '/usr/local/bin/python3'
+
