@@ -1,4 +1,5 @@
 call plug#begin('~/.vim/plugged')
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'preservim/nerdcommenter'
 Plug 'kien/ctrlp.vim'
@@ -10,6 +11,7 @@ Plug 'dense-analysis/ale'
 Plug 'flazz/vim-colorschemes'
 Plug 'pangloss/vim-javascript'
 Plug 'MaxMEllon/vim-jsx-pretty'
+Plug 'itchyny/lightline.vim'
 call plug#end()
 
 set ignorecase
@@ -36,28 +38,11 @@ endif
 
 "ctrl-p
 let g:ctrlp_max_files=0
-let g:ctrlp_max_depth=45
+let g:ctrlp_max_depth=999
 let g:ctrlp_switch_buffer = 'et'
-
-" Formatting for ag searching
-"let g:ag_prg="ag --smart-case --column"
-" start searching from your project root instead of the cwd
-"let g:ag_working_path_mode='r'
 
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-
-" use cmatch for ctrlp
-"let g:ctrlp_match_func = {'match' : 'matcher#cmatch' }
-"let g:ctrlp_match_func = {'match': 'cpsm#CtrlPMatch'}
-"let g:ctrlp_match_func = {'match': 'pymatcher#PyMatch'}
-
-" use silver searcher for grep
-"if executable('ag')
-  "set grepprg=ag\ --nogroup
-  "let g:ctrlp_user_command = 'ag %s -S -l --nocolor -g ""'
-  "let g:ctrlp_use_caching = 0
-"endif
 
 if executable('rg')
   set grepprg=rg\ --vimgrep
@@ -68,6 +53,7 @@ let g:rg_derive_root = 'true'
 
 let g:ctrlp_custom_ignore = 'tmp$\|\.git$\|\.hg$\'
 
+:command! Pp %!python -m json.tool
 
 " insert new lines from normal mode
 nmap <CR> o<Esc>
@@ -85,9 +71,6 @@ nnoremap <Leader>q :bp\|bd #<CR>
 
 " search replace word under cursor
 nnoremap <Leader>s :%s/\<<C-r><C-w>\>//g<Left><Left>
-
-"Y to yank til end of line.. like C and D
-map Y y$
 
 nnoremap <F1> <nop>
 nnoremap Q <nop>
@@ -111,5 +94,10 @@ let g:ctrlsf_auto_focus = {
     \ }
 
 "--------------------------------------------------
+
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
+
 
 colorscheme lodestone
